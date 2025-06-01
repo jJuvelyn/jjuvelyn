@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Portfolio</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #4a4e69;
+            --secondary-color: #9a8c98;
+            --dark-color: #22223b;
+            --light-color: #f3e9e4;
+            --accent-color: #c9ada7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        #hero {
+            padding-top: 100px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .artist-pic:hover {
+            transform: scale(1.05);
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: white;
+            color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* About Section */
+        #about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 100px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 70%;
+        }
+        
+        /* Gallery Section */
+        #gallery {
+            background-color: var(--light-color);
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 24px;
+        }
+        
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .tab-btn:hover {
+            color: var(--accent-color);
+        }
+        
+        .gallery-container {
+            display: none;
+        }
+        
+        .gallery-container.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(32, 31, 31, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            aspect-ratio: 1/1;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(176, 166, 166, 0.7);
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow: auto;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .modal-caption {
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            font-style: italic;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--primary-color);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: left 0.5s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 20px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text, .about-image {
+                flex: none;
+                width: 100%;
+            }
+            
+            .gallery-container.active {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .gallery-container.active {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-btn {
+                padding: 8px 15px;
+                font-size: 16px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ArtPortfolio</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>JUVELYN JOY</h1>
+                <p>Multimedia Arts Student | Visual Storyteller | Art Enthusiast</p>
+                <a href="#gallery" class="btn">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Hello! Welcome to my Portfolio! I am Juvelyn Joy, a passionate
+                and innovative 2nd year Multimedia Arts student studying at
+                Philippine Christian University-Dasmariñas. I am committed to
+                using visual storytelling to bring out artistic visions. I have a
+                great appreciation for aesthetics and a sharp eye for details,
+                and I specialize in turning ideas into artworks that capture the
+                viewer's attention.</p>
+                </div>
+                <div class="about-image">
+                    <img src="ADD IMAGE/Self.png" alt="Artist working">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <div class="container">
+            <div class="gallery-header">
+                <h2>My Art Gallery</h2>
+                <p>Explore some of my creative works</p>
+            </div>
+            
+            <div class="gallery-tabs">
+                <button class="tab-btn active" data-tab="schoolworks">Schoolworks</button>
+                <button class="tab-btn" data-tab="personalworks">Personal Works</button>
+            </div>
+            
+            <!-- Schoolworks Gallery -->
+            <div id="schoolworks" class="gallery-container active">
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/typography.png" alt="Schoolwork 1">
+                    <div class="gallery-caption">
+                        <h3>Typography</h3>
+                        <p>Customized typography of my name</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/painting.jpg" alt="Schoolwork 2">
+                    <div class="gallery-caption">
+                        <h3>Still Life Painting</h3>
+                        <p>A watercolor painting of fruits in a bowl</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/product photography.png" alt="Schoolwork 3">
+                    <div class="gallery-caption">
+                        <h3>Product Photography</h3>
+                        <p>Sticky notes product photography</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/photography.jpg" alt="Schoolwork 4">
+                    <div class="gallery-caption">
+                        <h3>Photography</h3>
+                        <p>Photograph of College Building's Parking Area for Photography Subject</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/animation.png" alt="Schoolwork 5">
+                    <div class="gallery-caption">
+                        <h3>Practice Animation</h3>
+                        <p>Practicing animation for 2D Animation Subject</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/3d modeling.png" alt="Schoolwork 6">
+                    <div class="gallery-caption">
+                        <h3>3D Modeling</h3>
+                        <p>Emperor's Chair Activity for 3D Modeling Subject</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/copy 3.jpg" alt="Schoolwork 7">
+                    <div class="gallery-caption">
+                        <h3>Tradional Drawing</h3>
+                        <p>Traditional Drawing using different pencnil strokes for Drawing 1 Subject</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/LAB 2 - Free Hand Art.jpg" alt="Schoolwork 8">
+                    <div class="gallery-caption">
+                        <h3>Painting</h3>
+                        <p>A Freehand Painting</p>
+                        <p>'Artists’ Flower' Painting — "bloom where they said you wouldn’t"</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/FINALS (page1).jpg" alt="Schoolwork 9">
+                    <div class="gallery-caption">
+                        <h3>Magazine Layout (page 1)</h3>
+                        <p>A corporate magazine layout for BMMA's Magazine</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/FINALS (page2).jpg" alt="Schoolwork 10">
+                    <div class="gallery-caption">
+                        <h3>Magazine Layout (page 2)</h3>
+                        <p>A corporate magazine layout for BMMA's Magazine</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Personal Works Gallery -->
+            <div id="personalworks" class="gallery-container">
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/STANDARD.jpg" alt="Personal Work 1">
+                    <div class="gallery-caption">
+                        <h3>Photography</h3>
+                        <p>Photograph of my bird with my Sister</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/photography2.jpg" alt="Personal Work 2">
+                    <div class="gallery-caption">
+                        <h3>Photography</h3>
+                        <p>Dawn</p>
+                        <p>"That one morning when the light hit just right, and we all knew — this was a moment worth keeping."</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/jin.png" alt="Personal Work 3">
+                    <div class="gallery-caption">
+                        <h3>Mixed-Media Art</h3>
+                        <p>Mixed media art of Gin in Hotarubi no Mori e</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/dk.jpg" alt="Personal Work 4">
+                    <div class="gallery-caption">
+                        <h3>Mixed-Media Art</h3>
+                        <p>DK (SVT) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/apple.jpg" alt="Personal Work 5">
+                    <div class="gallery-caption">
+                        <h3>Mixed-Media Art</h3>
+                        <p>Apple Mixed Media Art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/eyes.jpg" alt="Personal Work 6">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Eyes Digital Drawing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/ljsb&w.jpg" alt="Personal Work 7">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>LJS fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/sketch.png" alt="Personal Work 8">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Practice drawing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/ming.jpg" alt="Personal Work 9">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>My first digital drawing</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/scoups.jpg" alt="Personal Work 10">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>S.Coups (SVT) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/jeonghan.jpg" alt="Personal Work 11">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Jeonghan (SVT) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/shua.jpg" alt="Personal Work 12">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Shua (SVT) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/lisa.jpg" alt="Personal Work 13">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Lisa (BP) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/jennie.jpg" alt="Personal Work 14">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Jennie (BP) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/jisoo.jpg" alt="Personal Work 15">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Jisoo (BP) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/rose.jpg" alt="Personal Work 16">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>Rosé (BP) fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/ljs.jpg" alt="Personal Work 17">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>LJS fan art</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/dp.jpg" alt="Personal Work 18">
+                    <div class="gallery-caption">
+                        <h3>Digital Drawing</h3>
+                        <p>"Drawn from dreams, running toward something only she understands"</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/painting1.jpg" alt="Personal Work 19">
+                    <div class="gallery-caption">
+                        <h3>Painting</h3>
+                        <p>Cats Painting</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="ADD IMAGE/painting2.jpg" alt="Personal Work 20">
+                    <div class="gallery-caption">
+                        <h3>Painting</h3>
+                        <p>Cats Painting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Interested in collaborating, feel free to reach out!</p>
+            <form>
+                <div style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 30px auto;">
+                    <input type="text" placeholder="Your Name" style="padding: 15px; border-radius: 5px; border: 1px solid #ddd;">
+                    <input type="email" placeholder="Your Email" style="padding: 15px; border-radius: 5px; border: 1px solid #ddd;">
+                    <textarea placeholder="Your Message" rows="5" style="padding: 15px; border-radius: 5px; border: 1px solid #ddd;"></textarea>
+                    <button type="submit" class="btn">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <p>"Talent is a pursued interest. Anything that you're willing to practice, you can do."</p>
+            <p>-Bob Ross</p>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-img" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Gallery Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const galleryContainers = document.querySelectorAll('.gallery-container');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and containers
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                galleryContainers.forEach(container => container.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Show corresponding gallery
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Image Modal
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                const caption = item.querySelector('.gallery-caption').innerHTML;
+                
+                modal.style.display = 'flex';
+                modalImg.src = imgSrc;
+                modalCaption.innerHTML = caption;
+            });
+        });
+        
+        // Close modal when clicking X
+        document.querySelector('.close').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
